@@ -1,0 +1,7 @@
+Django
+celery
+redis
+psycopg2
+psycopg2-binary
+djangorestframework
+debugpy

@@ -1,0 +1,10 @@
+{% extends 'app/base.html' %}
+{% block content %}
+<h1>Delete Export Configuration</h1>
+<p>Are you sure you want to delete "{{ export_configuration.name }}"?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes, delete</button>
+</form>
+<a href="{% url 'export_configurations' %}">No, take me back</a>
+{% endblock %}

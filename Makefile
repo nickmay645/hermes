@@ -75,3 +75,6 @@ createsuperuser:
 makemigrations:
 	$(MAKE) run
 	docker-compose exec django python manage.py makemigrations
+
+shell:
+	docker-compose exec django python manage.py shell

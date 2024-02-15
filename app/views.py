@@ -1,58 +1,58 @@
+from django.shortcuts import render, get_object_or_404, redirect
+
+from django.core.paginator import Paginator
+# Create a simple hello world view
+from django.http import HttpResponse
+from django.views import View
+
 from django.shortcuts import render
 
-# Create your views here.
-# views.py
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-# from .tasks import my_celery_task
+from .models import ExportConfiguration
+from .forms import ExportConfigurationForm
 
-from app.tasks import *
-from app.tasks import fibonacci # error as was using the @app.task
+def index(request):
+    return render(request, 'app/base.html')
 
-import time
+def home(request):
+    return render(request, 'app/home.html')
 
-class MyApiView(APIView):
-    def get(self, request):
-        print(request.data,'Get method ') #  {} Get method 
+from django.shortcuts import render
+from .models import ExportConfiguration
 
-        # Example: Get Fibonacci sequence
-        n = int(request.query_params.get('n', 1))  # Default n is 1
-        fibonacci_result = fibonacci.delay(n).get()
-        
-        # Example: Get factorial
-        m = int(request.query_params.get('m', 1))  # Default m is 5
-        factorial_result = factorial.delay(m).get()
-        
-        # Example: Get task with delay result
-        task_result = task_with_delay.delay().get()
-        
-        # Example: Get get_name_rr result
-        get_name_rr_result = get_name_rr.delay().get()
-        
-        response_data = {
-            'fibonacci_result': fibonacci_result,
-            'factorial_result': factorial_result,
-            'task_with_delay_result': task_result,
-            'get_name_rr_result': get_name_rr_result,
-        }
-        return Response(response_data, status=status.HTTP_200_OK)
-    
-    def post(self, request):
-        print(request.data,'Post method')
-        # Get request data if needed
-        name = request.data.get('name')
+def export_configurations(request):
+    export_configurations_list = ExportConfiguration.objects.all()
+    paginator = Paginator(export_configurations_list, 10)  
+    page_number = request.GET.get('page')
+    export_configurations = paginator.get_page(page_number)
 
-        # Call the Celery task
-        result = create_person.delay(name)
-        
-        # Get the task result
-        while not result.ready():
-            print("Task is still running...")
-            time.sleep(1)
+    return render(request, 'app/export_configurations.html', {'export_configurations': export_configurations})
 
-        print("Task result:", result.result)
-        # You can return a response immediately with a task ID, result.id if needed
-        response_data = {'task_id': result.result}
+def edit_export_configuration(request, id):
+    export_configuration = get_object_or_404(ExportConfiguration, id=id)
+    if request.method == 'POST':
+        form = ExportConfigurationForm(request.POST, instance=export_configuration)
+        if form.is_valid():
+            form.save()
+            return redirect('export_configurations')
+    else:
+        form = ExportConfigurationForm(instance=export_configuration)
+    return render(request, 'app/edit_export_configuration.html', {'form': form})
 
-        return Response(response_data, status=status.HTTP_202_ACCEPTED)
+
+def delete_export_configuration(request, id):
+    export_configuration = get_object_or_404(ExportConfiguration, id=id)
+    if request.method == 'POST':
+        export_configuration.delete()
+        return redirect('export_configurations')
+    return render(request, 'app/delete_export_configuration.html', {'export_configuration': export_configuration})
+
+
+def create_export_configuration(request):
+    if request.method == 'POST':
+        form = ExportConfigurationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('export_configurations')
+    else:
+        form = ExportConfigurationForm()
+    return render(request, 'app/create_export_configuration.html', {'form': form})

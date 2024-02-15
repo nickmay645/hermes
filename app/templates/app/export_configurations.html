@@ -1,0 +1,55 @@
+{% extends 'app/base.html' %}
+{% block title %}
+Export Configurations
+{% endblock %}
+{% block content %}
+<style>
+    table {
+      width: 98%;
+      margin: auto;
+      border:1px solid black;
+    }
+    th, td {
+      padding: 5px;
+      border:1px solid black;
+    }
+</style>
+<h1>Export Configurations</h1>
+<a href="{% url 'create_export_configuration' %}">Create Export Configuration</a>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Format</th>
+        <th>Table</th>
+        <th>Fields</th>
+        <th>Created At</th>
+        <th>Updated At</th>
+        <th>Actions</th>
+    </tr>
+    {% for export_configuration in export_configurations %}
+    <tr>
+        <td>{{ export_configuration.name }}</td>
+        <td>{{ export_configuration.format }}</td>
+        <td>{{ export_configuration.table }}</td>
+        <td>{{ export_configuration.fields }}</td>
+        <td>{{ export_configuration.created_at }}</td>
+        <td>{{ export_configuration.updated_at }}</td>
+        <td>
+            <a href="{% url 'edit_export_configuration' id=export_configuration.id %}">edit</a>
+            <a href="{% url 'delete_export_configuration' id=export_configuration.id %}">delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<div class="pagination">
+    {% if export_configurations.has_previous %}
+    <a href="?page=1">first</a>
+    <a href="?page={{ export_configurations.previous_page_number }}">previous</a>
+    {% endif %}
+    <span class="current-page">Page {{ export_configurations.number }} of {{ export_configurations.paginator.num_pages }}</span>
+    {% if export_configurations.has_next %}
+    <a href="?page={{ export_configurations.next_page_number }}">next</a>
+    <a href="?page={{ export_configurations.paginator.num_pages }}">last</a>
+    {% endif %}
+</div>
+{% endblock %}

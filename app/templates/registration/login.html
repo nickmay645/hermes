@@ -32,66 +32,35 @@
       <form method="post" action="{% url 'login' %}" class="form-signin">
         {% csrf_token %}
         <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Email address</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+          <label for="{{ form.username.id_for_label }}" class="form-label">{{ form.username.label }}</label>
+          <input 
+            class="form-control"
+            type="{{ form.username.widget.input_type }}" 
+            name="{{ form.username.html_name }}" 
+            autofocus="" 
+            autocapitalize="none" 
+            autocomplete="username" 
+            maxlength="{{ form.username.field.max_length }}" 
+            required="" 
+            id="{{ form.username.id_for_label }}">
         </div>
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1">
+          <label for="{{ form.password.id_for_label }}" class="form-label">{{ form.password.label }}</label>
+          <input 
+            class="form-control"
+            type="password" 
+            name="password" 
+            autocomplete="current-password" 
+            required="" 
+            id="{{ form.password.id_for_label }}">
+
         </div>
-        <div class="mb-3">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        
+        <button type="submit" class="btn btn-primary">Login</button>
       </form>
+      
     </div>
   </div>
 </div>
 {% endblock %}
 
-{% comment %} 
-
-{% if form.errors %}
-        <p>Your username and password didn't match. Please try again.</p>
-      {% endif %}
-      {% if next %}
-        {% if user.is_authenticated %}
-          <p>Your account doesn't have access to this page. To proceed,
-            please login with an account that has access.</p>
-        {% else %}
-          <p>Please login to see this page.</p>
-        {% endif %}
-      {% endif %}
-
-      <form method="post" action="{% url 'login' %}" class="">
-        {% csrf_token %}
-        {% load i18n widget_tweaks %}
-
-        {% for field in form %}
-          <div class="row">
-            {% if field.errors %}
-              <label class="col-form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-              <div class="col">
-                {% render_field field class="form-control" placeholder=field.field.widget.attrs.placeholder %}
-                {% if field.help_text %}
-                  <p class="help-block"><small>{{ field.help_text }}</small></p>
-                {% endif %}
-              </div>
-            {% else %}
-              <label class="col-form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-              <div class="col-sm-2">
-                {% render_field field class="form-control" placeholder=field.field.widget.attrs.placeholder %}
-                {% if field.help_text %}
-                  <p class="help-block"><small>{{ field.help_text }}</small></p>
-                {% endif %}
-              </div>
-            {% endif %}
-          </div>
-        {% endfor %}
-        <input type="submit" value="login" class="btn btn-primary">
-        <input type="hidden" name="next" value="{{ next }}">
-      </form>
-      <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
-
-
-{% endcomment %}

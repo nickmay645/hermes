@@ -28,3 +28,7 @@ repos:
   rev: v0.0.7
   hooks:
     - id: htmllint
+- repo: https://github.com/html5validator/html5validator.git
+rev: v0.3.3
+hooks:
+  - id: html5validator

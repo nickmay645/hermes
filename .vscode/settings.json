@@ -1,4 +1,10 @@
 {
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "batisteo.vscode-django"
+  "[django-html]": {
+    "editor.defaultFormatter": "batisteo.vscode-django"
+  },
+
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.autopep8"
+  }
 }

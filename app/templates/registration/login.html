@@ -1,8 +1,7 @@
 {% extends "../app/base.html" %}
 {% block content %}
 <div class="container text-center">
-    <div class="row align-items-center">
-        <div class="col">
+
             <h2>Login</h2>
             
             {% if form.errors %}
@@ -16,24 +15,100 @@
                 <p>Please login to see this page.</p>
                 {% endif %}
             {% endif %}
-            <form method="post" action="{% url 'login' %}">
+
+
+            <form method="post" action="{% url 'login' %}" class="">
                 {% csrf_token %}
-                <table class="table">
-                    <tr>
-                        <td>{{ form.username.label_tag }}</td>
-                        <td>{{ form.username }}</td>
-                    </tr>
-                    <tr>
-                        <td>{{ form.password.label_tag }}</td>
-                        <td>{{ form.password }}</td>
-                    </tr>
-                </table>
+                {% load i18n widget_tweaks %}
+
+                {% for field in form %}
+                <div class="mb-3 row">
+                    {% if field.errors %}
+
+                            <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+
+                                {% render_field field class="form-control" placeholder=field.field.widget.attrs.placeholder %}
+                                {% if field.help_text %}
+                                    <p class="help-block"><small>{{ field.help_text }}</small></p>
+                                {% endif %}
+
+                    {% else %}
+  
+                            <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+
+                                {% render_field field class="form-control" placeholder=field.field.widget.attrs.placeholder %}
+                                {% if field.help_text %}
+                                    <p class="help-block"><small>{{ field.help_text }}</small></p>
+                                {% endif %}
+
+                    {% endif %}
+                </div>
+                {% endfor %}
                 <input type="submit" value="login" class="btn btn-primary">
                 <input type="hidden" name="next" value="{{ next }}">
             </form>
-        
+            </div>
         <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
-    </div>
-    </div>
+
 </div>
 {% endblock %}
+
+{% comment %} <div class="container text-center">
+    <div class="row align-items-center">
+      <div class="col">
+        {% load i18n widget_tweaks %}
+  
+        <form
+          role="form"
+          class="center-form"
+          action="{% url 'login' %}"
+          method="post"
+        >
+          {% csrf_token %} {% if form.errors %}
+          <p>Your username and password didn't match. Please try again.</p>
+          {% endif %} {% if next %} {% if user.is_authenticated %}
+          <p>
+            Your account doesn't have access to this page. To proceed, please
+            login with an account that has access.
+          </p>
+          {% else %}
+          <p>Please login to see this page.</p>
+          {% endif %} {% endif %}
+          <div class="mb-3 row">
+            <label
+              for="{{ form.username.id_for_label }}"
+              class="col-sm-2 col-form-label"
+              >{{ form.username.label }}</label
+            >
+            <div class="col-sm-10">
+              <input
+                type="text"
+                class="form-control"
+                id="{{ form.username.id_for_label }}"
+              />
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label
+              for="{{ form.password.id_for_label }}"
+              class="col-sm-2 col-form-label"
+              >{{ form.password.label }}</label
+            >
+            <div class="col-sm-10">
+              <input
+                type="password"
+                class="form-control"
+                id="{{ form.password.id_for_label }}"
+              />
+            </div>
+          </div>
+  
+          <input type="submit" value="login" class="btn btn-primary" />
+          <input type="hidden" name="next" value="{{ next }}" />
+  
+          <p><a href="{% url 'password_reset' %}">Forgot password?</a></p>
+        </form>
+      </div>
+    </div>
+  </div>
+  {% endblock %}  {% endcomment %}

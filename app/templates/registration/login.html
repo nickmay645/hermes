@@ -1,90 +1,97 @@
-{% extends "../app/base.html" %} {% block content %}
-  <div class="container text-center">
-    <div class="row align-items-center">
-      <div class="col">
-        <h2>Login</h2>
+{% extends "../app/base.html" %}
+{% block content %}
 
-        {% if form.errors %}
-          <p>Your username and password didn't match. Please try again.</p>
-        {% endif %} {% if next %} {% if user.is_authenticated %}
-          <p>Your account doesn't have access to this page. To proceed, please login with an account that has access.</p>
-        {% else %}
-          <p>Please login to see this page.</p>
-        {% endif %} {% endif %}
-        <div class="mb-3 row">
-          <form method="post" action="{% url 'login' %}" class="">
-            {% csrf_token %} {% load i18n widget_tweaks %} {% for field in form %}
-              <div class="mb-3 row">
-                {% if field.errors %}
+<style>
+  .container .row {
+    height: 100vh;
+    width: 50%;
+  }
+  .p {
+    text-align: center;
+    justify-content: center;
+  }
+</style>
 
-                  <label class="col-sm-2 col-form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-                  <div class="col-sm-2">
-                    {% render_field field class="form-control" placeholder=field.field.widget.attrs.placeholder %} {% if
-                    field.help_text %}
-                    <p class="help-block">
-                      <small>{{ field.help_text }}</small>
-                    </p>
-                {% endif %}
-              </div>
-            {% else %}
+<div class="container align-items-center">
+  <div class="row align-items-center justify-content-center mx-auto">
+    
+    <div class="row-md-6">
+      {% if form.errors %}
+        <p class="text-center">Your username and password didn't match. Please try again.</p>
+      {% endif %}
 
-              <label class="col-sm-2 col-form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
-              <div class="col-sm-2">
-                {% render_field field class="form-control" placeholder=field.field.widget.attrs.placeholder %} {% if
-                field.help_text %}
-                <p class="help-block">
-                  <small>{{ field.help_text }}</small>
-                </p>
-            {% endif %}
-          </div>
-{% endif %}
-</div>
-{% endfor %}
-<input type="submit" value="login" class="btn btn-primary" />
-<input type="hidden" name="next" value="{{ next }}" />
-</form>
-</div>
-<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
-</div>
-</div>
-</div>
-{% endblock %} {% comment %}
-<div class="container text-center">
-  <div class="row align-items-center">
-    <div class="col">
-      {% load i18n widget_tweaks %}
+      {% if next %}
+        {% if user.is_authenticated %}
+          <p class="text-center">Your account doesn't have access to this page. To proceed,
+            please login with an account that has access.</p>
+        {% endif %}
+      {% endif %}
+    </div>
 
-      <form role="form" class="center-form" action="{% url 'login' %}" method="post">
-        {% csrf_token %} {% if form.errors %}
-        <p>Your username and password didn't match. Please try again.</p>
-        {% endif %} {% if next %} {% if user.is_authenticated %}
-        <p>Your account doesn't have access to this page. To proceed, please login with an account that has access.</p>
-        {% else %}
-        <p>Please login to see this page.</p>
-        {% endif %} {% endif %}
-        <div class="mb-3 row">
-          <label for="{{ form.username.id_for_label }}" class="col-sm-2 col-form-label"
-            >{{ form.username.label }}</label
-          >
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="{{ form.username.id_for_label }}" />
-          </div>
+    <div class="form-group row-md-6">
+      <form method="post" action="{% url 'login' %}" class="form-signin">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
         </div>
-        <div class="mb-3 row">
-          <label for="{{ form.password.id_for_label }}" class="col-sm-2 col-form-label"
-            >{{ form.password.label }}</label
-          >
-          <div class="col-sm-10">
-            <input type="password" class="form-control" id="{{ form.password.id_for_label }}" />
-          </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1">
         </div>
-
-        <input type="submit" value="login" class="btn btn-primary" />
-        <input type="hidden" name="next" value="{{ next }}" />
-
-        <p><a href="{% url 'password_reset' %}">Forgot password?</a></p>
+        <div class="mb-3">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </div>
   </div>
 </div>
-{% endblock %} {% endcomment %}
+{% endblock %}
+
+{% comment %} 
+
+{% if form.errors %}
+        <p>Your username and password didn't match. Please try again.</p>
+      {% endif %}
+      {% if next %}
+        {% if user.is_authenticated %}
+          <p>Your account doesn't have access to this page. To proceed,
+            please login with an account that has access.</p>
+        {% else %}
+          <p>Please login to see this page.</p>
+        {% endif %}
+      {% endif %}
+
+      <form method="post" action="{% url 'login' %}" class="">
+        {% csrf_token %}
+        {% load i18n widget_tweaks %}
+
+        {% for field in form %}
+          <div class="row">
+            {% if field.errors %}
+              <label class="col-form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+              <div class="col">
+                {% render_field field class="form-control" placeholder=field.field.widget.attrs.placeholder %}
+                {% if field.help_text %}
+                  <p class="help-block"><small>{{ field.help_text }}</small></p>
+                {% endif %}
+              </div>
+            {% else %}
+              <label class="col-form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+              <div class="col-sm-2">
+                {% render_field field class="form-control" placeholder=field.field.widget.attrs.placeholder %}
+                {% if field.help_text %}
+                  <p class="help-block"><small>{{ field.help_text }}</small></p>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+        <input type="submit" value="login" class="btn btn-primary">
+        <input type="hidden" name="next" value="{{ next }}">
+      </form>
+      <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+
+
+{% endcomment %}

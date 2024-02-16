@@ -136,4 +136,5 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost").split(" ")
 
 # Login Redirect URL
 # https://docs.djangoproject.com/en/5.0/topics/auth/default/#django.contrib.auth.views.LoginView.get_default_redirect_url
-LOGIN_REDIRECT_URL = '/home'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = 'logout/'

@@ -3,21 +3,10 @@
 Export Configurations
 {% endblock %}
 {% block content %}
-<style>
-    table {
-      width: 98%;
-      margin: auto;
-      border:1px solid black;
-    }
-    th, td {
-      padding: 5px;
-      border:1px solid black;
-    }
-</style>
 <h1>Export Configurations</h1>
 <a href="{% url 'create_export_configuration' %}">Create Export Configuration</a>
-<table>
-    <tr>
+<table class="table table-striped table-hover">
+    <thead>
         <th>Name</th>
         <th>Format</th>
         <th>Table</th>
@@ -25,21 +14,24 @@ Export Configurations
         <th>Created At</th>
         <th>Updated At</th>
         <th>Actions</th>
-    </tr>
-    {% for export_configuration in export_configurations %}
-    <tr>
-        <td>{{ export_configuration.name }}</td>
-        <td>{{ export_configuration.format }}</td>
-        <td>{{ export_configuration.table }}</td>
-        <td>{{ export_configuration.fields }}</td>
-        <td>{{ export_configuration.created_at }}</td>
-        <td>{{ export_configuration.updated_at }}</td>
-        <td>
-            <a href="{% url 'edit_export_configuration' id=export_configuration.id %}">edit</a>
-            <a href="{% url 'delete_export_configuration' id=export_configuration.id %}">delete</a>
-        </td>
-    </tr>
-    {% endfor %}
+    </thead>
+    <tbody>
+        {% for export_configuration in export_configurations %}
+        <tr>
+            <td>{{ export_configuration.name }}</td>
+            <td>{{ export_configuration.format }}</td>
+            <td>{{ export_configuration.table }}</td>
+            <td>{{ export_configuration.fields }}</td>
+            <td>{{ export_configuration.created_at }}</td>
+            <td>{{ export_configuration.updated_at }}</td>
+            <td>
+                <a href="{% url 'edit_export_configuration' id=export_configuration.id %}">edit</a>
+                <a href="{% url 'delete_export_configuration' id=export_configuration.id %}">delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    <tbody>
+    
 </table>
 <div class="pagination">
     {% if export_configurations.has_previous %}

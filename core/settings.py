@@ -133,3 +133,7 @@ CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
 
 # Allowed Hosts
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost").split(" ")
+
+# Login Redirect URL
+# https://docs.djangoproject.com/en/5.0/topics/auth/default/#django.contrib.auth.views.LoginView.get_default_redirect_url
+LOGIN_REDIRECT_URL = '/home'

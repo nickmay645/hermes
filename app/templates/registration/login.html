@@ -3,7 +3,7 @@
 <div class="container text-center">
 
             <h2>Login</h2>
-            
+
             {% if form.errors %}
             <p>Your username and password didn't match. Please try again.</p>
             {% endif %}
@@ -33,7 +33,7 @@
                                 {% endif %}
 
                     {% else %}
-  
+
                             <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
 
                                 {% render_field field class="form-control" placeholder=field.field.widget.attrs.placeholder %}
@@ -56,7 +56,7 @@
     <div class="row align-items-center">
       <div class="col">
         {% load i18n widget_tweaks %}
-  
+
         <form
           role="form"
           class="center-form"
@@ -101,10 +101,10 @@
               />
             </div>
           </div>
-  
+
           <input type="submit" value="login" class="btn btn-primary" />
           <input type="hidden" name="next" value="{{ next }}" />
-  
+
           <p><a href="{% url 'password_reset' %}">Forgot password?</a></p>
         </form>
       </div>

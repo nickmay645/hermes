@@ -1,12 +1,14 @@
 from django import forms
+
 from .models import ExportConfiguration
 
+
 class ExportConfigurationForm(forms.ModelForm):
-    template_name = 'app/export_configuration/export_configuration_form.html'
+    template_name = "app/export_configuration/export_configuration_form.html"
 
     class Meta:
         model = ExportConfiguration
-        fields = ['name', 'format', 'dataset', 'table', 'query', 'destination_paths']
+        fields = ["name", "format", "dataset", "table", "query", "destination_paths"]
         labels = {
             "name": ("Export Configuration Name"),
         }

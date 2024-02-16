@@ -33,7 +33,7 @@ $(VENV):
 	$(VENV_PIP) install -r requirements-test.txt
 	# $(VENV_PRECOMMIT) install
 	@touch $(VENV_SENTINEL)
-	
+
 
 .PHONY: update_requirements
 update_requirements:
@@ -59,7 +59,7 @@ test: $(VENV)
 	$(VENV_PYTEST) --cov-report term-missing --junitxml=test-reports/pytest/junit.xml tests
 
 run:
-	docker-compose up -d --build 
+	docker-compose up -d --build
 
 build:
 	docker-compose build

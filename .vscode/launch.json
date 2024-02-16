@@ -1,54 +1,53 @@
 {
-    // Articles that helped me to create this file:
-    //  https://miaoz2001.medium.com/debug-celery-in-a-docker-compose-container-with-vs-code-2b1d7d5eef99
-    //  https://miaoz2001.medium.com/debug-django-in-a-docker-compose-container-with-vs-code-88598dfc8be3
-     
-    "version": "0.2.0",
-    "configurations": [
+  // Articles that helped me to create this file:
+  //  https://miaoz2001.medium.com/debug-celery-in-a-docker-compose-container-with-vs-code-2b1d7d5eef99
+  //  https://miaoz2001.medium.com/debug-django-in-a-docker-compose-container-with-vs-code-88598dfc8be3
 
-      {
-        "name": "Django: Remote Attach",
-        "type": "debugpy",
-        "request": "attach",
-        "pathMappings": [
-          {
-            "localRoot": "${workspaceFolder}",
-            "remoteRoot": "/usr/src/app"
-          }
-        ],
-        "connect": {
-          "host": "localhost",
-          "port": 5678
-        },
-        "justMyCode": false,
-        "preLaunchTask": "up",
-        "postDebugTask": "stop",
-      },
-      {
-        "name": "Celery: Remote Attach",
-        "type": "debugpy",
-        "request": "attach",
-        "connect": {
-            "host": "localhost",
-            "port": 6900
-         },
-        "pathMappings": [
-            {
-                "localRoot": "${workspaceFolder}",
-                "remoteRoot": "/usr/src/app"
-            }
-        ],
-        "justMyCode": false,
-        "subProcess": true,
-        "preLaunchTask": "up",
-        "postDebugTask": "stop",
-      },
-    ],
-    "compounds": [
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Django: Remote Attach",
+      "type": "debugpy",
+      "request": "attach",
+      "pathMappings": [
         {
-          "name": "Server/Client",
-          "configurations": ["Django: Remote Attach", "Celery: Remote Attach"],
-          "stopAll": true
+          "localRoot": "${workspaceFolder}",
+          "remoteRoot": "/usr/src/app"
         }
-    ]
-  }
+      ],
+      "connect": {
+        "host": "localhost",
+        "port": 5678
+      },
+      "justMyCode": false,
+      "preLaunchTask": "up",
+      "postDebugTask": "stop"
+    },
+    {
+      "name": "Celery: Remote Attach",
+      "type": "debugpy",
+      "request": "attach",
+      "connect": {
+        "host": "localhost",
+        "port": 6900
+      },
+      "pathMappings": [
+        {
+          "localRoot": "${workspaceFolder}",
+          "remoteRoot": "/usr/src/app"
+        }
+      ],
+      "justMyCode": false,
+      "subProcess": true,
+      "preLaunchTask": "up",
+      "postDebugTask": "stop"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Server/Client",
+      "configurations": ["Django: Remote Attach", "Celery: Remote Attach"],
+      "stopAll": true
+    }
+  ]
+}

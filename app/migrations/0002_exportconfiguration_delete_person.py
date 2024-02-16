@@ -4,27 +4,34 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('app', '0001_initial'),
+        ("app", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='ExportConfiguration',
+            name="ExportConfiguration",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
-                ('format', models.CharField(max_length=255)),
-                ('dataset', models.CharField(max_length=255)),
-                ('table', models.CharField(max_length=255)),
-                ('query', models.TextField(null=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now_add=True)),
-                ('destination_paths', models.TextField(null=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
+                ("format", models.CharField(max_length=255)),
+                ("dataset", models.CharField(max_length=255)),
+                ("table", models.CharField(max_length=255)),
+                ("query", models.TextField(null=True)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now_add=True)),
+                ("destination_paths", models.TextField(null=True)),
             ],
         ),
         migrations.DeleteModel(
-            name='Person',
+            name="Person",
         ),
     ]

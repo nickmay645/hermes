@@ -1,71 +1,71 @@
 version: "3.8"
-   
-services:
-    django:
-        build: .
-        container_name: django
-        command: >
-             sh -c "python manage.py migrate && 
-             python -m debugpy --wait-for-client --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:8000"
-        volumes:
-            - .:/usr/src/app/
-        ports:
-            - "8000:8000"
-            - "5678:5678"
-        environment:
-            - DEBUG=1
-            - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 0.0.0.0 [::1]
-            - CELERY_BROKER=redis://redis:6379/0
-            - CELERY_BACKEND=redis://redis:6379/0
-            - POSTGRES_DB=postgres
-            - POSTGRES_USER=postgres
-            - POSTGRES_PASSWORD=postgres
-            - POSTGRES_HOST=postgres-database
-            - POSTGRES_PORT=5432
-        depends_on:
-            - postgres-database
-            - redis
-        restart: on-failure
 
-    celery:
-        build: .
-        container_name: celery
-        command: >
-            sh -c "python -m debugpy --wait-for-client --listen 0.0.0.0:6900 -m celery -A core worker -l info"
-        ports:
-            - "6900:6900"
-        volumes:
-            - .:/usr/src/app
-        environment:
-            - DEBUG=1
-            - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
-            - CELERY_BROKER=redis://redis:6379/0
-            - CELERY_BACKEND=redis://redis:6379/0
-            - POSTGRES_DB=postgres
-            - POSTGRES_USER=postgres
-            - POSTGRES_PASSWORD=postgres
-            - POSTGRES_HOST=postgres-database
-            - POSTGRES_PORT=5432
-        depends_on:
-            - django
-            - redis
-        restart: on-failure
-    postgres-database:
-        image: postgres
-        container_name: postgres-database
-        environment:
-            - POSTGRES_DB=postgres
-            - POSTGRES_USER=postgres
-            - POSTGRES_PASSWORD=postgres
-            - POSTGRES_HOST=postgres-database
-            - POSTGRES_PORT=5432
-        volumes:
-            - postgres_database:/var/lib/postgresql/data/
-        ports:
-            - "5432:5432"
-    redis:
-        image: "redis:alpine"
-        container_name: redis
-        
+services:
+  django:
+    build: .
+    container_name: django
+    command: >
+      sh -c "python manage.py migrate &&
+      python -m debugpy --wait-for-client --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/usr/src/app/
+    ports:
+      - "8000:8000"
+      - "5678:5678"
+    environment:
+      - DEBUG=1
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 0.0.0.0 [::1]
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/0
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=postgres-database
+      - POSTGRES_PORT=5432
+    depends_on:
+      - postgres-database
+      - redis
+    restart: on-failure
+
+  celery:
+    build: .
+    container_name: celery
+    command: >
+      sh -c "python -m debugpy --wait-for-client --listen 0.0.0.0:6900 -m celery -A core worker -l info"
+    ports:
+      - "6900:6900"
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - DEBUG=1
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/0
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=postgres-database
+      - POSTGRES_PORT=5432
+    depends_on:
+      - django
+      - redis
+    restart: on-failure
+  postgres-database:
+    image: postgres
+    container_name: postgres-database
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=postgres-database
+      - POSTGRES_PORT=5432
+    volumes:
+      - postgres_database:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+  redis:
+    image: "redis:alpine"
+    container_name: redis
+
 volumes:
-    postgres_database:
+  postgres_database:

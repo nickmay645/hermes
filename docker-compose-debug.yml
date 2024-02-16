@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 
 services:
   django:
@@ -10,8 +10,8 @@ services:
     volumes:
       - .:/usr/src/app/
     ports:
-      - "8000:8000"
-      - "5678:5678"
+      - '8000:8000'
+      - '5678:5678'
     environment:
       - DEBUG=1
       - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 0.0.0.0 [::1]
@@ -33,7 +33,7 @@ services:
     command: >
       sh -c "python -m debugpy --wait-for-client --listen 0.0.0.0:6900 -m celery -A core worker -l info"
     ports:
-      - "6900:6900"
+      - '6900:6900'
     volumes:
       - .:/usr/src/app
     environment:
@@ -62,9 +62,9 @@ services:
     volumes:
       - postgres_database:/var/lib/postgresql/data/
     ports:
-      - "5432:5432"
+      - '5432:5432'
   redis:
-    image: "redis:alpine"
+    image: 'redis:alpine'
     container_name: redis
 
 volumes:

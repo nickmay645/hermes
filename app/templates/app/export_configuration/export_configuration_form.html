@@ -1,31 +1,25 @@
 {% load i18n widget_tweaks %} {% for field in form %}
-<div class="mb-3 row">
-  {% if field.errors %}
-  <div class="form-group has-error">
-    <label class="col-sm-2 control-label" for="{{ field.id_for_label }}"
-      >{{ field.label }}</label
-    >
-    <div class="col-sm-10">
-      {% render_field field class="form-control"
-      placeholder=field.field.widget.attrs.placeholder %} {% if field.help_text
-      %}
-      <p class="help-block"><small>{{ field.help_text }}</small></p>
-      {% endif %}
-    </div>
-  </div>
-  {% else %}
   <div class="mb-3 row">
-    <label class="col-sm-2 control-label" for="{{ field.id_for_label }}"
-      >{{ field.label }}</label
-    >
-    <div class="col-sm-10">
-      {% render_field field class="form-control"
-      placeholder=field.field.widget.attrs.placeholder %} {% if field.help_text
-      %}
-      <p class="help-block"><small>{{ field.help_text }}</small></p>
-      {% endif %}
-    </div>
+    {% if field.errors %}
+      <div class="form-group has-error">
+        <label class="col-sm-2 control-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+        <div class="col-sm-10">
+          {% render_field field class="form-control" placeholder=field.field.widget.attrs.placeholder %} {% if
+          field.help_text %}
+          <p class="help-block"><small>{{ field.help_text }}</small></p>
+    {% endif %}
   </div>
-  {% endif %}
+  </div>
+{% else %}
+  <div class="mb-3 row">
+    <label class="col-sm-2 control-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+    <div class="col-sm-10">
+      {% render_field field class="form-control" placeholder=field.field.widget.attrs.placeholder %} {% if
+      field.help_text %}
+      <p class="help-block"><small>{{ field.help_text }}</small></p>
+{% endif %}
+</div>
+</div>
+{% endif %}
 </div>
 {% endfor %}

@@ -1,6 +1,14 @@
 from django.urls import include, path
 
-from .views import *
+from .views import (
+    create_export_configuration,
+    delete_export_configuration,
+    edit_export_configuration,
+    export_configurations,
+    index,
+    logout_complete,
+    logout_view,
+)
 
 export_configration_urlpatterns = [
     path("export_configurations/", export_configurations, name="export_configurations"),

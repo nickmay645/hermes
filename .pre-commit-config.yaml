@@ -13,19 +13,14 @@ repos:
     rev: 6.0.0
     hooks:
       - id: flake8
-  - repo: https://github.com/timothycrosley/isort
-    rev: 5.12.0
-    hooks:
-      - id: isort
-        additional_dependencies:
-          - toml
   - repo: https://github.com/psf/black
     rev: 23.3.0
     hooks:
       - id: black
         language_version: python3.10
-  - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v2.5.1
+  - repo: https://github.com/rtts/djhtml
+    rev: '3.0.6'
     hooks:
-      - id: prettier
-        files: \.(js|ts|jsx|tsx|css|less|html|json|markdown|md|yaml|yml)$
+      - id: djhtml
+      - id: djcss
+      - id: djjs
